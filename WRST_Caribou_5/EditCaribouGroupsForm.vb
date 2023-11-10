@@ -83,6 +83,7 @@ ORDER BY Animals.ProjectId, Animals.AnimalId, CollarDeployments.DeploymentDate"
            ,'" & EID & "'
            ," & DeploymentID & "
            ,'" & Guid.NewGuid.ToString & "')"
+
                 Debug.Print(vbNewLine & InsertQuery & vbNewLine)
             End If
         Next
