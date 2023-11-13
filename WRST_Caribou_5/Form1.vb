@@ -14,8 +14,7 @@
         Me.UserToolStripLabel.Text = My.User.Name
         Me.ConnectionStringToolStripLabel.Text = My.Settings.WRST_CaribouConnectionString
 
-        Dim EditCaribouGroupsForm As New EditCaribouGroupsForm
-        EditCaribouGroupsForm.Show()
+
 
 
     End Sub
@@ -30,7 +29,10 @@
         CaribouDetailsForm.Show()
     End Sub
 
-    Private Sub ImportDataButton_Click(sender As Object, e As EventArgs) Handles ImportDataButton.Click
-
+    Private Sub EditCaribouGroupsButton_Click(sender As Object, e As EventArgs) Handles EditCaribouGroupsButton.Click
+        'Dim Sql As String = "DELETE FROM Surveys WHERE Description='TEST';DELETE FROM Surveys WHERE Description='TEST2'"
+        'ExecuteNonQuery(Sql, My.Settings.WRST_CaribouConnectionString)
+        Dim EditCaribouGroupsForm As New EditCaribouGroupsForm
+        EditCaribouGroupsForm.Show()
     End Sub
 End Class

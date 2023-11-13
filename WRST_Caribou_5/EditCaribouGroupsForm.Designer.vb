@@ -30,9 +30,7 @@ Partial Class EditCaribouGroupsForm
         Me.TableAdapterManager = New WRST_Caribou_5.WRST_CaribouDataSetTableAdapters.TableAdapterManager()
         Me.GroupMembersTableAdapter = New WRST_Caribou_5.WRST_CaribouDataSetTableAdapters.GroupMembersTableAdapter()
         Me.CaribouGroupsBindingNavigator = New System.Windows.Forms.BindingNavigator(Me.components)
-        Me.BindingNavigatorAddNewItem = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorCountItem = New System.Windows.Forms.ToolStripLabel()
-        Me.BindingNavigatorDeleteItem = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorMoveFirstItem = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorMovePreviousItem = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorSeparator = New System.Windows.Forms.ToolStripSeparator()
@@ -41,11 +39,19 @@ Partial Class EditCaribouGroupsForm
         Me.BindingNavigatorMoveNextItem = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorMoveLastItem = New System.Windows.Forms.ToolStripButton()
         Me.BindingNavigatorSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.CaribouGroupsBindingNavigatorSaveItem = New System.Windows.Forms.ToolStripButton()
         Me.GroupMembersBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.GroupMembersDataGridView = New System.Windows.Forms.DataGridView()
+        Me.AnimalIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn51 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn52 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn54 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn55 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn56 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn57 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn58 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn59 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MainSplitContainer = New System.Windows.Forms.SplitContainer()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.CaribouGroupsDataGridView = New System.Windows.Forms.DataGridView()
         Me.SurveyNameDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.YearDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.HerdDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -100,25 +106,29 @@ Partial Class EditCaribouGroupsForm
         Me.NotesDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ParkDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.EIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.AnimalIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn51 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn52 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn54 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn55 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn56 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn57 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn58 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn59 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.FilterToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.SortToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
-        Me.ApplyFilterSortToolStripButton = New System.Windows.Forms.ToolStripButton()
-        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
-        Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
         Me.CaribouGroupContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ConvertFrequenciesToAnimalIDsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CurrentRowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReconcileFrequenciesForThisGroupToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CaribouGroupsToolStrip = New System.Windows.Forms.ToolStrip()
+        Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.FilterToolStripLabel = New System.Windows.Forms.ToolStripLabel()
+        Me.FilterToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
+        Me.ApplyFilterToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.SortToolStripLabel = New System.Windows.Forms.ToolStripLabel()
+        Me.SortToolStripTextBox = New System.Windows.Forms.ToolStripTextBox()
+        Me.ApplySortToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.GroupMembersBindingNavigator = New System.Windows.Forms.BindingNavigator(Me.components)
+        Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
+        Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripTextBox1 = New System.Windows.Forms.ToolStripTextBox()
+        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripButton3 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripButton4 = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         CType(Me.WRST_CaribouDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CaribouGroupsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.CaribouGroupsBindingNavigator, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -129,8 +139,11 @@ Partial Class EditCaribouGroupsForm
         Me.MainSplitContainer.Panel1.SuspendLayout()
         Me.MainSplitContainer.Panel2.SuspendLayout()
         Me.MainSplitContainer.SuspendLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.CaribouGroupsDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.CaribouGroupContextMenuStrip.SuspendLayout()
+        Me.CaribouGroupsToolStrip.SuspendLayout()
+        CType(Me.GroupMembersBindingNavigator, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupMembersBindingNavigator.SuspendLayout()
         Me.SuspendLayout()
         '
         'WRST_CaribouDataSet
@@ -162,30 +175,22 @@ Partial Class EditCaribouGroupsForm
         '
         'CaribouGroupsBindingNavigator
         '
-        Me.CaribouGroupsBindingNavigator.AddNewItem = Me.BindingNavigatorAddNewItem
+        Me.CaribouGroupsBindingNavigator.AddNewItem = Nothing
         Me.CaribouGroupsBindingNavigator.BindingSource = Me.CaribouGroupsBindingSource
         Me.CaribouGroupsBindingNavigator.CountItem = Me.BindingNavigatorCountItem
-        Me.CaribouGroupsBindingNavigator.DeleteItem = Me.BindingNavigatorDeleteItem
-        Me.CaribouGroupsBindingNavigator.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BindingNavigatorMoveFirstItem, Me.BindingNavigatorMovePreviousItem, Me.BindingNavigatorSeparator, Me.BindingNavigatorPositionItem, Me.BindingNavigatorCountItem, Me.BindingNavigatorSeparator1, Me.BindingNavigatorMoveNextItem, Me.BindingNavigatorMoveLastItem, Me.BindingNavigatorSeparator2, Me.BindingNavigatorAddNewItem, Me.BindingNavigatorDeleteItem, Me.CaribouGroupsBindingNavigatorSaveItem, Me.ToolStripSeparator1, Me.ToolStripLabel1, Me.FilterToolStripTextBox, Me.ToolStripSeparator2, Me.ToolStripLabel2, Me.SortToolStripTextBox, Me.ApplyFilterSortToolStripButton})
-        Me.CaribouGroupsBindingNavigator.Location = New System.Drawing.Point(0, 0)
+        Me.CaribouGroupsBindingNavigator.DeleteItem = Nothing
+        Me.CaribouGroupsBindingNavigator.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.CaribouGroupsBindingNavigator.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BindingNavigatorMoveFirstItem, Me.BindingNavigatorMovePreviousItem, Me.BindingNavigatorSeparator, Me.BindingNavigatorPositionItem, Me.BindingNavigatorCountItem, Me.BindingNavigatorSeparator1, Me.BindingNavigatorMoveNextItem, Me.BindingNavigatorMoveLastItem, Me.BindingNavigatorSeparator2})
+        Me.CaribouGroupsBindingNavigator.Location = New System.Drawing.Point(0, 446)
         Me.CaribouGroupsBindingNavigator.MoveFirstItem = Me.BindingNavigatorMoveFirstItem
         Me.CaribouGroupsBindingNavigator.MoveLastItem = Me.BindingNavigatorMoveLastItem
         Me.CaribouGroupsBindingNavigator.MoveNextItem = Me.BindingNavigatorMoveNextItem
         Me.CaribouGroupsBindingNavigator.MovePreviousItem = Me.BindingNavigatorMovePreviousItem
         Me.CaribouGroupsBindingNavigator.Name = "CaribouGroupsBindingNavigator"
         Me.CaribouGroupsBindingNavigator.PositionItem = Me.BindingNavigatorPositionItem
-        Me.CaribouGroupsBindingNavigator.Size = New System.Drawing.Size(800, 25)
+        Me.CaribouGroupsBindingNavigator.Size = New System.Drawing.Size(1181, 25)
         Me.CaribouGroupsBindingNavigator.TabIndex = 0
         Me.CaribouGroupsBindingNavigator.Text = "BindingNavigator1"
-        '
-        'BindingNavigatorAddNewItem
-        '
-        Me.BindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BindingNavigatorAddNewItem.Image = CType(resources.GetObject("BindingNavigatorAddNewItem.Image"), System.Drawing.Image)
-        Me.BindingNavigatorAddNewItem.Name = "BindingNavigatorAddNewItem"
-        Me.BindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = True
-        Me.BindingNavigatorAddNewItem.Size = New System.Drawing.Size(23, 22)
-        Me.BindingNavigatorAddNewItem.Text = "Add new"
         '
         'BindingNavigatorCountItem
         '
@@ -193,15 +198,6 @@ Partial Class EditCaribouGroupsForm
         Me.BindingNavigatorCountItem.Size = New System.Drawing.Size(35, 22)
         Me.BindingNavigatorCountItem.Text = "of {0}"
         Me.BindingNavigatorCountItem.ToolTipText = "Total number of items"
-        '
-        'BindingNavigatorDeleteItem
-        '
-        Me.BindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.BindingNavigatorDeleteItem.Image = CType(resources.GetObject("BindingNavigatorDeleteItem.Image"), System.Drawing.Image)
-        Me.BindingNavigatorDeleteItem.Name = "BindingNavigatorDeleteItem"
-        Me.BindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = True
-        Me.BindingNavigatorDeleteItem.Size = New System.Drawing.Size(23, 22)
-        Me.BindingNavigatorDeleteItem.Text = "Delete"
         '
         'BindingNavigatorMoveFirstItem
         '
@@ -264,14 +260,6 @@ Partial Class EditCaribouGroupsForm
         Me.BindingNavigatorSeparator2.Name = "BindingNavigatorSeparator2"
         Me.BindingNavigatorSeparator2.Size = New System.Drawing.Size(6, 25)
         '
-        'CaribouGroupsBindingNavigatorSaveItem
-        '
-        Me.CaribouGroupsBindingNavigatorSaveItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.CaribouGroupsBindingNavigatorSaveItem.Image = CType(resources.GetObject("CaribouGroupsBindingNavigatorSaveItem.Image"), System.Drawing.Image)
-        Me.CaribouGroupsBindingNavigatorSaveItem.Name = "CaribouGroupsBindingNavigatorSaveItem"
-        Me.CaribouGroupsBindingNavigatorSaveItem.Size = New System.Drawing.Size(23, 22)
-        Me.CaribouGroupsBindingNavigatorSaveItem.Text = "Save Data"
-        '
         'GroupMembersBindingSource
         '
         Me.GroupMembersBindingSource.DataMember = "FK_GroupMembers_CaribouGroups"
@@ -286,40 +274,98 @@ Partial Class EditCaribouGroupsForm
         Me.GroupMembersDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GroupMembersDataGridView.Location = New System.Drawing.Point(0, 0)
         Me.GroupMembersDataGridView.Name = "GroupMembersDataGridView"
-        Me.GroupMembersDataGridView.Size = New System.Drawing.Size(800, 100)
+        Me.GroupMembersDataGridView.Size = New System.Drawing.Size(1181, 86)
         Me.GroupMembersDataGridView.TabIndex = 2
+        '
+        'AnimalIDDataGridViewTextBoxColumn
+        '
+        Me.AnimalIDDataGridViewTextBoxColumn.DataPropertyName = "AnimalID"
+        Me.AnimalIDDataGridViewTextBoxColumn.HeaderText = "AnimalID"
+        Me.AnimalIDDataGridViewTextBoxColumn.Name = "AnimalIDDataGridViewTextBoxColumn"
+        Me.AnimalIDDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        '
+        'DataGridViewTextBoxColumn51
+        '
+        Me.DataGridViewTextBoxColumn51.DataPropertyName = "RecordedFrequency"
+        Me.DataGridViewTextBoxColumn51.HeaderText = "RecordedFrequency"
+        Me.DataGridViewTextBoxColumn51.Name = "DataGridViewTextBoxColumn51"
+        '
+        'DataGridViewTextBoxColumn52
+        '
+        Me.DataGridViewTextBoxColumn52.DataPropertyName = "ActualFrequency"
+        Me.DataGridViewTextBoxColumn52.HeaderText = "ActualFrequency"
+        Me.DataGridViewTextBoxColumn52.Name = "DataGridViewTextBoxColumn52"
+        '
+        'DataGridViewTextBoxColumn54
+        '
+        Me.DataGridViewTextBoxColumn54.DataPropertyName = "Comment"
+        Me.DataGridViewTextBoxColumn54.HeaderText = "Comment"
+        Me.DataGridViewTextBoxColumn54.Name = "DataGridViewTextBoxColumn54"
+        '
+        'DataGridViewTextBoxColumn55
+        '
+        Me.DataGridViewTextBoxColumn55.DataPropertyName = "RecordInsertedDate"
+        Me.DataGridViewTextBoxColumn55.HeaderText = "RecordInsertedDate"
+        Me.DataGridViewTextBoxColumn55.Name = "DataGridViewTextBoxColumn55"
+        '
+        'DataGridViewTextBoxColumn56
+        '
+        Me.DataGridViewTextBoxColumn56.DataPropertyName = "RecordInsertedBy"
+        Me.DataGridViewTextBoxColumn56.HeaderText = "RecordInsertedBy"
+        Me.DataGridViewTextBoxColumn56.Name = "DataGridViewTextBoxColumn56"
+        '
+        'DataGridViewTextBoxColumn57
+        '
+        Me.DataGridViewTextBoxColumn57.DataPropertyName = "EID"
+        Me.DataGridViewTextBoxColumn57.HeaderText = "EID"
+        Me.DataGridViewTextBoxColumn57.Name = "DataGridViewTextBoxColumn57"
+        '
+        'DataGridViewTextBoxColumn58
+        '
+        Me.DataGridViewTextBoxColumn58.DataPropertyName = "DeploymentID"
+        Me.DataGridViewTextBoxColumn58.HeaderText = "DeploymentID"
+        Me.DataGridViewTextBoxColumn58.Name = "DataGridViewTextBoxColumn58"
+        '
+        'DataGridViewTextBoxColumn59
+        '
+        Me.DataGridViewTextBoxColumn59.DataPropertyName = "GroupMemberID"
+        Me.DataGridViewTextBoxColumn59.HeaderText = "GroupMemberID"
+        Me.DataGridViewTextBoxColumn59.Name = "DataGridViewTextBoxColumn59"
         '
         'MainSplitContainer
         '
         Me.MainSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MainSplitContainer.Location = New System.Drawing.Point(0, 25)
+        Me.MainSplitContainer.Location = New System.Drawing.Point(0, 0)
         Me.MainSplitContainer.Name = "MainSplitContainer"
         Me.MainSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
         'MainSplitContainer.Panel1
         '
-        Me.MainSplitContainer.Panel1.Controls.Add(Me.DataGridView1)
+        Me.MainSplitContainer.Panel1.Controls.Add(Me.CaribouGroupsDataGridView)
+        Me.MainSplitContainer.Panel1.Controls.Add(Me.CaribouGroupsBindingNavigator)
+        Me.MainSplitContainer.Panel1.Controls.Add(Me.CaribouGroupsToolStrip)
         '
         'MainSplitContainer.Panel2
         '
         Me.MainSplitContainer.Panel2.Controls.Add(Me.GroupMembersDataGridView)
-        Me.MainSplitContainer.Size = New System.Drawing.Size(800, 531)
-        Me.MainSplitContainer.SplitterDistance = 427
+        Me.MainSplitContainer.Panel2.Controls.Add(Me.GroupMembersBindingNavigator)
+        Me.MainSplitContainer.Size = New System.Drawing.Size(1181, 586)
+        Me.MainSplitContainer.SplitterDistance = 471
         Me.MainSplitContainer.TabIndex = 3
         '
-        'DataGridView1
+        'CaribouGroupsDataGridView
         '
-        Me.DataGridView1.AllowUserToOrderColumns = True
-        Me.DataGridView1.AutoGenerateColumns = False
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.SurveyNameDataGridViewTextBoxColumn, Me.YearDataGridViewTextBoxColumn, Me.HerdDataGridViewTextBoxColumn, Me.SurveyTypeDataGridViewTextBoxColumn, Me.SearchAreaDataGridViewTextBoxColumn, Me.GroupNumberDataGridViewTextBoxColumn, Me.SightingDateDataGridViewTextBoxColumn, Me.CowDataGridViewTextBoxColumn, Me.CalfMaleDataGridViewTextBoxColumn, Me.CalfFemaleDataGridViewTextBoxColumn, Me.CalfUnclassifiedDataGridViewTextBoxColumn, Me.CalfDataGridViewTextBoxColumn, Me.SmallBullDataGridViewTextBoxColumn, Me.MediumBullDataGridViewTextBoxColumn, Me.LargeBullDataGridViewTextBoxColumn, Me.BullDataGridViewTextBoxColumn, Me.AdultDataGridViewTextBoxColumn, Me.CaribouDataGridViewTextBoxColumn, Me.UnknownDataGridViewTextBoxColumn, Me.FrequenciesInGroupDataGridViewTextBoxColumn, Me.FrequenciesCountDataGridViewTextBoxColumn, Me.LatDataGridViewTextBoxColumn, Me.LonDataGridViewTextBoxColumn, Me.InDataGridViewCheckBoxColumn, Me.SeenDataGridViewCheckBoxColumn, Me.MarkedDataGridViewCheckBoxColumn, Me.WaypointNameDataGridViewTextBoxColumn, Me.SurveyCommentDataGridViewTextBoxColumn, Me.CrewNumberDataGridViewTextBoxColumn, Me.PilotDataGridViewTextBoxColumn, Me.Observer1DataGridViewTextBoxColumn, Me.Observer2DataGridViewTextBoxColumn, Me.AircraftTypeDataGridViewTextBoxColumn, Me.TailNoDataGridViewTextBoxColumn, Me.SurveyLengthhoursDataGridViewTextBoxColumn, Me.IsFollowUpFlightDataGridViewCheckBoxColumn, Me.SpotterPlaneTailNoDataGridViewTextBoxColumn, Me.SpotterPlaneTypeDataGridViewTextBoxColumn, Me.SpotterPlanePilotDataGridViewTextBoxColumn, Me.WeatherConditionsDataGridViewTextBoxColumn, Me.SnowConditionsDataGridViewTextBoxColumn, Me.FlightCommentDataGridViewTextBoxColumn, Me.ReportReferenceCodeDataGridViewTextBoxColumn, Me.SourceFilenameDataGridViewTextBoxColumn, Me.SourceFileURLDataGridViewTextBoxColumn, Me.RecordInsertedDateDataGridViewTextBoxColumn, Me.RecordInsertedByDataGridViewTextBoxColumn, Me.CertificationLevelDataGridViewTextBoxColumn, Me.CertificationDateDataGridViewTextBoxColumn, Me.CertifiedByDataGridViewTextBoxColumn, Me.DataQualityNotesDataGridViewTextBoxColumn, Me.NotesDataGridViewTextBoxColumn, Me.ParkDataGridViewTextBoxColumn, Me.EIDDataGridViewTextBoxColumn})
-        Me.DataGridView1.ContextMenuStrip = Me.CaribouGroupContextMenuStrip
-        Me.DataGridView1.DataSource = Me.CaribouGroupsBindingSource
-        Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView1.Location = New System.Drawing.Point(0, 0)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(800, 427)
-        Me.DataGridView1.TabIndex = 0
+        Me.CaribouGroupsDataGridView.AllowUserToOrderColumns = True
+        Me.CaribouGroupsDataGridView.AutoGenerateColumns = False
+        Me.CaribouGroupsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.CaribouGroupsDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.SurveyNameDataGridViewTextBoxColumn, Me.YearDataGridViewTextBoxColumn, Me.HerdDataGridViewTextBoxColumn, Me.SurveyTypeDataGridViewTextBoxColumn, Me.SearchAreaDataGridViewTextBoxColumn, Me.GroupNumberDataGridViewTextBoxColumn, Me.SightingDateDataGridViewTextBoxColumn, Me.CowDataGridViewTextBoxColumn, Me.CalfMaleDataGridViewTextBoxColumn, Me.CalfFemaleDataGridViewTextBoxColumn, Me.CalfUnclassifiedDataGridViewTextBoxColumn, Me.CalfDataGridViewTextBoxColumn, Me.SmallBullDataGridViewTextBoxColumn, Me.MediumBullDataGridViewTextBoxColumn, Me.LargeBullDataGridViewTextBoxColumn, Me.BullDataGridViewTextBoxColumn, Me.AdultDataGridViewTextBoxColumn, Me.CaribouDataGridViewTextBoxColumn, Me.UnknownDataGridViewTextBoxColumn, Me.FrequenciesInGroupDataGridViewTextBoxColumn, Me.FrequenciesCountDataGridViewTextBoxColumn, Me.LatDataGridViewTextBoxColumn, Me.LonDataGridViewTextBoxColumn, Me.InDataGridViewCheckBoxColumn, Me.SeenDataGridViewCheckBoxColumn, Me.MarkedDataGridViewCheckBoxColumn, Me.WaypointNameDataGridViewTextBoxColumn, Me.SurveyCommentDataGridViewTextBoxColumn, Me.CrewNumberDataGridViewTextBoxColumn, Me.PilotDataGridViewTextBoxColumn, Me.Observer1DataGridViewTextBoxColumn, Me.Observer2DataGridViewTextBoxColumn, Me.AircraftTypeDataGridViewTextBoxColumn, Me.TailNoDataGridViewTextBoxColumn, Me.SurveyLengthhoursDataGridViewTextBoxColumn, Me.IsFollowUpFlightDataGridViewCheckBoxColumn, Me.SpotterPlaneTailNoDataGridViewTextBoxColumn, Me.SpotterPlaneTypeDataGridViewTextBoxColumn, Me.SpotterPlanePilotDataGridViewTextBoxColumn, Me.WeatherConditionsDataGridViewTextBoxColumn, Me.SnowConditionsDataGridViewTextBoxColumn, Me.FlightCommentDataGridViewTextBoxColumn, Me.ReportReferenceCodeDataGridViewTextBoxColumn, Me.SourceFilenameDataGridViewTextBoxColumn, Me.SourceFileURLDataGridViewTextBoxColumn, Me.RecordInsertedDateDataGridViewTextBoxColumn, Me.RecordInsertedByDataGridViewTextBoxColumn, Me.CertificationLevelDataGridViewTextBoxColumn, Me.CertificationDateDataGridViewTextBoxColumn, Me.CertifiedByDataGridViewTextBoxColumn, Me.DataQualityNotesDataGridViewTextBoxColumn, Me.NotesDataGridViewTextBoxColumn, Me.ParkDataGridViewTextBoxColumn, Me.EIDDataGridViewTextBoxColumn})
+        Me.CaribouGroupsDataGridView.ContextMenuStrip = Me.CaribouGroupContextMenuStrip
+        Me.CaribouGroupsDataGridView.DataSource = Me.CaribouGroupsBindingSource
+        Me.CaribouGroupsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CaribouGroupsDataGridView.Location = New System.Drawing.Point(0, 25)
+        Me.CaribouGroupsDataGridView.Name = "CaribouGroupsDataGridView"
+        Me.CaribouGroupsDataGridView.Size = New System.Drawing.Size(1181, 421)
+        Me.CaribouGroupsDataGridView.TabIndex = 0
         '
         'SurveyNameDataGridViewTextBoxColumn
         '
@@ -645,130 +691,186 @@ Partial Class EditCaribouGroupsForm
         Me.EIDDataGridViewTextBoxColumn.HeaderText = "EID"
         Me.EIDDataGridViewTextBoxColumn.Name = "EIDDataGridViewTextBoxColumn"
         '
-        'AnimalIDDataGridViewTextBoxColumn
+        'CaribouGroupContextMenuStrip
         '
-        Me.AnimalIDDataGridViewTextBoxColumn.DataPropertyName = "AnimalID"
-        Me.AnimalIDDataGridViewTextBoxColumn.HeaderText = "AnimalID"
-        Me.AnimalIDDataGridViewTextBoxColumn.Name = "AnimalIDDataGridViewTextBoxColumn"
-        Me.AnimalIDDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.CaribouGroupContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReconcileFrequenciesForThisGroupToolStripMenuItem})
+        Me.CaribouGroupContextMenuStrip.Name = "CaribouGroupContextMenuStrip"
+        Me.CaribouGroupContextMenuStrip.Size = New System.Drawing.Size(385, 26)
         '
-        'DataGridViewTextBoxColumn51
+        'ReconcileFrequenciesForThisGroupToolStripMenuItem
         '
-        Me.DataGridViewTextBoxColumn51.DataPropertyName = "RecordedFrequency"
-        Me.DataGridViewTextBoxColumn51.HeaderText = "RecordedFrequency"
-        Me.DataGridViewTextBoxColumn51.Name = "DataGridViewTextBoxColumn51"
+        Me.ReconcileFrequenciesForThisGroupToolStripMenuItem.Name = "ReconcileFrequenciesForThisGroupToolStripMenuItem"
+        Me.ReconcileFrequenciesForThisGroupToolStripMenuItem.Size = New System.Drawing.Size(384, 22)
+        Me.ReconcileFrequenciesForThisGroupToolStripMenuItem.Text = "Check the frequency to AnimalID mapping for this group..."
         '
-        'DataGridViewTextBoxColumn52
+        'CaribouGroupsToolStrip
         '
-        Me.DataGridViewTextBoxColumn52.DataPropertyName = "ActualFrequency"
-        Me.DataGridViewTextBoxColumn52.HeaderText = "ActualFrequency"
-        Me.DataGridViewTextBoxColumn52.Name = "DataGridViewTextBoxColumn52"
+        Me.CaribouGroupsToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveToolStripButton, Me.ToolStripSeparator4, Me.FilterToolStripLabel, Me.FilterToolStripTextBox, Me.ApplyFilterToolStripButton, Me.ToolStripSeparator2, Me.SortToolStripLabel, Me.SortToolStripTextBox, Me.ApplySortToolStripButton, Me.ToolStripSeparator3})
+        Me.CaribouGroupsToolStrip.Location = New System.Drawing.Point(0, 0)
+        Me.CaribouGroupsToolStrip.Name = "CaribouGroupsToolStrip"
+        Me.CaribouGroupsToolStrip.Size = New System.Drawing.Size(1181, 25)
+        Me.CaribouGroupsToolStrip.TabIndex = 1
+        Me.CaribouGroupsToolStrip.Text = "ToolStrip1"
         '
-        'DataGridViewTextBoxColumn54
+        'SaveToolStripButton
         '
-        Me.DataGridViewTextBoxColumn54.DataPropertyName = "Comment"
-        Me.DataGridViewTextBoxColumn54.HeaderText = "Comment"
-        Me.DataGridViewTextBoxColumn54.Name = "DataGridViewTextBoxColumn54"
+        Me.SaveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.SaveToolStripButton.Image = CType(resources.GetObject("SaveToolStripButton.Image"), System.Drawing.Image)
+        Me.SaveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.SaveToolStripButton.Name = "SaveToolStripButton"
+        Me.SaveToolStripButton.Size = New System.Drawing.Size(35, 22)
+        Me.SaveToolStripButton.Text = "Save"
         '
-        'DataGridViewTextBoxColumn55
+        'ToolStripSeparator4
         '
-        Me.DataGridViewTextBoxColumn55.DataPropertyName = "RecordInsertedDate"
-        Me.DataGridViewTextBoxColumn55.HeaderText = "RecordInsertedDate"
-        Me.DataGridViewTextBoxColumn55.Name = "DataGridViewTextBoxColumn55"
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(6, 25)
         '
-        'DataGridViewTextBoxColumn56
+        'FilterToolStripLabel
         '
-        Me.DataGridViewTextBoxColumn56.DataPropertyName = "RecordInsertedBy"
-        Me.DataGridViewTextBoxColumn56.HeaderText = "RecordInsertedBy"
-        Me.DataGridViewTextBoxColumn56.Name = "DataGridViewTextBoxColumn56"
-        '
-        'DataGridViewTextBoxColumn57
-        '
-        Me.DataGridViewTextBoxColumn57.DataPropertyName = "EID"
-        Me.DataGridViewTextBoxColumn57.HeaderText = "EID"
-        Me.DataGridViewTextBoxColumn57.Name = "DataGridViewTextBoxColumn57"
-        '
-        'DataGridViewTextBoxColumn58
-        '
-        Me.DataGridViewTextBoxColumn58.DataPropertyName = "DeploymentID"
-        Me.DataGridViewTextBoxColumn58.HeaderText = "DeploymentID"
-        Me.DataGridViewTextBoxColumn58.Name = "DataGridViewTextBoxColumn58"
-        '
-        'DataGridViewTextBoxColumn59
-        '
-        Me.DataGridViewTextBoxColumn59.DataPropertyName = "GroupMemberID"
-        Me.DataGridViewTextBoxColumn59.HeaderText = "GroupMemberID"
-        Me.DataGridViewTextBoxColumn59.Name = "DataGridViewTextBoxColumn59"
-        '
-        'ToolStripSeparator1
-        '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
+        Me.FilterToolStripLabel.Name = "FilterToolStripLabel"
+        Me.FilterToolStripLabel.Size = New System.Drawing.Size(36, 22)
+        Me.FilterToolStripLabel.Text = "Filter:"
         '
         'FilterToolStripTextBox
         '
         Me.FilterToolStripTextBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.FilterToolStripTextBox.Name = "FilterToolStripTextBox"
-        Me.FilterToolStripTextBox.Size = New System.Drawing.Size(100, 25)
+        Me.FilterToolStripTextBox.Size = New System.Drawing.Size(300, 25)
+        '
+        'ApplyFilterToolStripButton
+        '
+        Me.ApplyFilterToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ApplyFilterToolStripButton.Image = CType(resources.GetObject("ApplyFilterToolStripButton.Image"), System.Drawing.Image)
+        Me.ApplyFilterToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ApplyFilterToolStripButton.Name = "ApplyFilterToolStripButton"
+        Me.ApplyFilterToolStripButton.Size = New System.Drawing.Size(69, 22)
+        Me.ApplyFilterToolStripButton.Text = "Apply filter"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
         Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
         '
+        'SortToolStripLabel
+        '
+        Me.SortToolStripLabel.Name = "SortToolStripLabel"
+        Me.SortToolStripLabel.Size = New System.Drawing.Size(28, 22)
+        Me.SortToolStripLabel.Text = "Sort"
+        '
         'SortToolStripTextBox
         '
         Me.SortToolStripTextBox.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.SortToolStripTextBox.Name = "SortToolStripTextBox"
-        Me.SortToolStripTextBox.Size = New System.Drawing.Size(100, 25)
+        Me.SortToolStripTextBox.Size = New System.Drawing.Size(300, 25)
         '
-        'ApplyFilterSortToolStripButton
+        'ApplySortToolStripButton
         '
-        Me.ApplyFilterSortToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ApplyFilterSortToolStripButton.Image = CType(resources.GetObject("ApplyFilterSortToolStripButton.Image"), System.Drawing.Image)
-        Me.ApplyFilterSortToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ApplyFilterSortToolStripButton.Name = "ApplyFilterSortToolStripButton"
-        Me.ApplyFilterSortToolStripButton.Size = New System.Drawing.Size(42, 22)
-        Me.ApplyFilterSortToolStripButton.Text = "Apply"
+        Me.ApplySortToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ApplySortToolStripButton.Image = CType(resources.GetObject("ApplySortToolStripButton.Image"), System.Drawing.Image)
+        Me.ApplySortToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ApplySortToolStripButton.Name = "ApplySortToolStripButton"
+        Me.ApplySortToolStripButton.Size = New System.Drawing.Size(65, 22)
+        Me.ApplySortToolStripButton.Text = "Apply sort"
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 25)
+        '
+        'GroupMembersBindingNavigator
+        '
+        Me.GroupMembersBindingNavigator.AddNewItem = Nothing
+        Me.GroupMembersBindingNavigator.BindingSource = Me.GroupMembersBindingSource
+        Me.GroupMembersBindingNavigator.CountItem = Me.ToolStripLabel1
+        Me.GroupMembersBindingNavigator.DeleteItem = Nothing
+        Me.GroupMembersBindingNavigator.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.GroupMembersBindingNavigator.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripSeparator1, Me.ToolStripTextBox1, Me.ToolStripLabel1, Me.ToolStripSeparator5, Me.ToolStripButton3, Me.ToolStripButton4, Me.ToolStripSeparator6})
+        Me.GroupMembersBindingNavigator.Location = New System.Drawing.Point(0, 86)
+        Me.GroupMembersBindingNavigator.MoveFirstItem = Me.ToolStripButton1
+        Me.GroupMembersBindingNavigator.MoveLastItem = Me.ToolStripButton4
+        Me.GroupMembersBindingNavigator.MoveNextItem = Me.ToolStripButton3
+        Me.GroupMembersBindingNavigator.MovePreviousItem = Me.ToolStripButton2
+        Me.GroupMembersBindingNavigator.Name = "GroupMembersBindingNavigator"
+        Me.GroupMembersBindingNavigator.PositionItem = Me.ToolStripTextBox1
+        Me.GroupMembersBindingNavigator.Size = New System.Drawing.Size(1181, 25)
+        Me.GroupMembersBindingNavigator.TabIndex = 3
+        Me.GroupMembersBindingNavigator.Text = "BindingNavigator1"
         '
         'ToolStripLabel1
         '
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(33, 22)
-        Me.ToolStripLabel1.Text = "Filter"
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(35, 22)
+        Me.ToolStripLabel1.Text = "of {0}"
+        Me.ToolStripLabel1.ToolTipText = "Total number of items"
         '
-        'ToolStripLabel2
+        'ToolStripButton1
         '
-        Me.ToolStripLabel2.Name = "ToolStripLabel2"
-        Me.ToolStripLabel2.Size = New System.Drawing.Size(28, 22)
-        Me.ToolStripLabel2.Text = "Sort"
+        Me.ToolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), System.Drawing.Image)
+        Me.ToolStripButton1.Name = "ToolStripButton1"
+        Me.ToolStripButton1.RightToLeftAutoMirrorImage = True
+        Me.ToolStripButton1.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton1.Text = "Move first"
         '
-        'CaribouGroupContextMenuStrip
+        'ToolStripButton2
         '
-        Me.CaribouGroupContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConvertFrequenciesToAnimalIDsToolStripMenuItem})
-        Me.CaribouGroupContextMenuStrip.Name = "CaribouGroupContextMenuStrip"
-        Me.CaribouGroupContextMenuStrip.Size = New System.Drawing.Size(252, 26)
+        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), System.Drawing.Image)
+        Me.ToolStripButton2.Name = "ToolStripButton2"
+        Me.ToolStripButton2.RightToLeftAutoMirrorImage = True
+        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton2.Text = "Move previous"
         '
-        'ConvertFrequenciesToAnimalIDsToolStripMenuItem
+        'ToolStripSeparator1
         '
-        Me.ConvertFrequenciesToAnimalIDsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CurrentRowToolStripMenuItem})
-        Me.ConvertFrequenciesToAnimalIDsToolStripMenuItem.Name = "ConvertFrequenciesToAnimalIDsToolStripMenuItem"
-        Me.ConvertFrequenciesToAnimalIDsToolStripMenuItem.Size = New System.Drawing.Size(251, 22)
-        Me.ConvertFrequenciesToAnimalIDsToolStripMenuItem.Text = "Convert frequencies to AnimalIDs"
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
         '
-        'CurrentRowToolStripMenuItem
+        'ToolStripTextBox1
         '
-        Me.CurrentRowToolStripMenuItem.Name = "CurrentRowToolStripMenuItem"
-        Me.CurrentRowToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.CurrentRowToolStripMenuItem.Text = "Current row"
+        Me.ToolStripTextBox1.AccessibleName = "Position"
+        Me.ToolStripTextBox1.AutoSize = False
+        Me.ToolStripTextBox1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ToolStripTextBox1.Name = "ToolStripTextBox1"
+        Me.ToolStripTextBox1.Size = New System.Drawing.Size(50, 23)
+        Me.ToolStripTextBox1.Text = "0"
+        Me.ToolStripTextBox1.ToolTipText = "Current position"
+        '
+        'ToolStripSeparator5
+        '
+        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(6, 25)
+        '
+        'ToolStripButton3
+        '
+        Me.ToolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton3.Image = CType(resources.GetObject("ToolStripButton3.Image"), System.Drawing.Image)
+        Me.ToolStripButton3.Name = "ToolStripButton3"
+        Me.ToolStripButton3.RightToLeftAutoMirrorImage = True
+        Me.ToolStripButton3.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton3.Text = "Move next"
+        '
+        'ToolStripButton4
+        '
+        Me.ToolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton4.Image = CType(resources.GetObject("ToolStripButton4.Image"), System.Drawing.Image)
+        Me.ToolStripButton4.Name = "ToolStripButton4"
+        Me.ToolStripButton4.RightToLeftAutoMirrorImage = True
+        Me.ToolStripButton4.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton4.Text = "Move last"
+        '
+        'ToolStripSeparator6
+        '
+        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(6, 25)
         '
         'EditCaribouGroupsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 556)
+        Me.ClientSize = New System.Drawing.Size(1181, 586)
         Me.Controls.Add(Me.MainSplitContainer)
-        Me.Controls.Add(Me.CaribouGroupsBindingNavigator)
         Me.Name = "EditCaribouGroupsForm"
         Me.Text = "Caribou groups"
         CType(Me.WRST_CaribouDataSet, System.ComponentModel.ISupportInitialize).EndInit()
@@ -779,13 +881,19 @@ Partial Class EditCaribouGroupsForm
         CType(Me.GroupMembersBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GroupMembersDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainSplitContainer.Panel1.ResumeLayout(False)
+        Me.MainSplitContainer.Panel1.PerformLayout()
         Me.MainSplitContainer.Panel2.ResumeLayout(False)
+        Me.MainSplitContainer.Panel2.PerformLayout()
         CType(Me.MainSplitContainer, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainSplitContainer.ResumeLayout(False)
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.CaribouGroupsDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.CaribouGroupContextMenuStrip.ResumeLayout(False)
+        Me.CaribouGroupsToolStrip.ResumeLayout(False)
+        Me.CaribouGroupsToolStrip.PerformLayout()
+        CType(Me.GroupMembersBindingNavigator, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupMembersBindingNavigator.ResumeLayout(False)
+        Me.GroupMembersBindingNavigator.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
@@ -794,9 +902,7 @@ Partial Class EditCaribouGroupsForm
     Friend WithEvents CaribouGroupsTableAdapter As WRST_CaribouDataSetTableAdapters.CaribouGroupsTableAdapter
     Friend WithEvents TableAdapterManager As WRST_CaribouDataSetTableAdapters.TableAdapterManager
     Friend WithEvents CaribouGroupsBindingNavigator As BindingNavigator
-    Friend WithEvents BindingNavigatorAddNewItem As ToolStripButton
     Friend WithEvents BindingNavigatorCountItem As ToolStripLabel
-    Friend WithEvents BindingNavigatorDeleteItem As ToolStripButton
     Friend WithEvents BindingNavigatorMoveFirstItem As ToolStripButton
     Friend WithEvents BindingNavigatorMovePreviousItem As ToolStripButton
     Friend WithEvents BindingNavigatorSeparator As ToolStripSeparator
@@ -805,12 +911,11 @@ Partial Class EditCaribouGroupsForm
     Friend WithEvents BindingNavigatorMoveNextItem As ToolStripButton
     Friend WithEvents BindingNavigatorMoveLastItem As ToolStripButton
     Friend WithEvents BindingNavigatorSeparator2 As ToolStripSeparator
-    Friend WithEvents CaribouGroupsBindingNavigatorSaveItem As ToolStripButton
     Friend WithEvents GroupMembersTableAdapter As WRST_CaribouDataSetTableAdapters.GroupMembersTableAdapter
     Friend WithEvents GroupMembersBindingSource As BindingSource
     Friend WithEvents GroupMembersDataGridView As DataGridView
     Friend WithEvents MainSplitContainer As SplitContainer
-    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents CaribouGroupsDataGridView As DataGridView
     Friend WithEvents SurveyNameDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents YearDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
     Friend WithEvents HerdDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
@@ -874,14 +979,27 @@ Partial Class EditCaribouGroupsForm
     Friend WithEvents DataGridViewTextBoxColumn57 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn58 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn59 As DataGridViewTextBoxColumn
-    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
-    Friend WithEvents FilterToolStripTextBox As ToolStripTextBox
-    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
-    Friend WithEvents SortToolStripTextBox As ToolStripTextBox
-    Friend WithEvents ApplyFilterSortToolStripButton As ToolStripButton
-    Friend WithEvents ToolStripLabel1 As ToolStripLabel
-    Friend WithEvents ToolStripLabel2 As ToolStripLabel
     Friend WithEvents CaribouGroupContextMenuStrip As ContextMenuStrip
-    Friend WithEvents ConvertFrequenciesToAnimalIDsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents CurrentRowToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ReconcileFrequenciesForThisGroupToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CaribouGroupsToolStrip As ToolStrip
+    Friend WithEvents FilterToolStripLabel As ToolStripLabel
+    Friend WithEvents FilterToolStripTextBox As ToolStripTextBox
+    Friend WithEvents ApplyFilterToolStripButton As ToolStripButton
+    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
+    Friend WithEvents SortToolStripLabel As ToolStripLabel
+    Friend WithEvents SortToolStripTextBox As ToolStripTextBox
+    Friend WithEvents ApplySortToolStripButton As ToolStripButton
+    Friend WithEvents SaveToolStripButton As ToolStripButton
+    Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
+    Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
+    Friend WithEvents GroupMembersBindingNavigator As BindingNavigator
+    Friend WithEvents ToolStripLabel1 As ToolStripLabel
+    Friend WithEvents ToolStripButton1 As ToolStripButton
+    Friend WithEvents ToolStripButton2 As ToolStripButton
+    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents ToolStripTextBox1 As ToolStripTextBox
+    Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
+    Friend WithEvents ToolStripButton3 As ToolStripButton
+    Friend WithEvents ToolStripButton4 As ToolStripButton
+    Friend WithEvents ToolStripSeparator6 As ToolStripSeparator
 End Class

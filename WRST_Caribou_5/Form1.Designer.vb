@@ -35,6 +35,8 @@ Partial Class Form1
         Me.Label2 = New System.Windows.Forms.Label()
         Me.OpenCaribouDetailsFormButton = New System.Windows.Forms.Button()
         Me.ImportDataButton = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.EditCaribouGroupsButton = New System.Windows.Forms.Button()
         Me.MainFormBottomToolStrip.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -70,9 +72,9 @@ Partial Class Form1
         '
         Me.MainFormBottomToolStrip.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.MainFormBottomToolStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.UserToolStripLabel, Me.ToolStripSeparator1, Me.ToolStripLabel2, Me.ConnectionStringToolStripLabel})
-        Me.MainFormBottomToolStrip.Location = New System.Drawing.Point(0, 318)
+        Me.MainFormBottomToolStrip.Location = New System.Drawing.Point(0, 510)
         Me.MainFormBottomToolStrip.Name = "MainFormBottomToolStrip"
-        Me.MainFormBottomToolStrip.Size = New System.Drawing.Size(349, 25)
+        Me.MainFormBottomToolStrip.Size = New System.Drawing.Size(531, 25)
         Me.MainFormBottomToolStrip.TabIndex = 3
         '
         'ToolStripLabel1
@@ -125,7 +127,7 @@ Partial Class Form1
         '
         'OpenCaribouDetailsFormButton
         '
-        Me.OpenCaribouDetailsFormButton.Location = New System.Drawing.Point(15, 142)
+        Me.OpenCaribouDetailsFormButton.Location = New System.Drawing.Point(12, 142)
         Me.OpenCaribouDetailsFormButton.Name = "OpenCaribouDetailsFormButton"
         Me.OpenCaribouDetailsFormButton.Size = New System.Drawing.Size(322, 23)
         Me.OpenCaribouDetailsFormButton.TabIndex = 5
@@ -134,18 +136,39 @@ Partial Class Form1
         '
         'ImportDataButton
         '
-        Me.ImportDataButton.Location = New System.Drawing.Point(16, 182)
+        Me.ImportDataButton.Location = New System.Drawing.Point(12, 182)
         Me.ImportDataButton.Name = "ImportDataButton"
         Me.ImportDataButton.Size = New System.Drawing.Size(322, 23)
         Me.ImportDataButton.TabIndex = 7
         Me.ImportDataButton.Text = "Import data..."
         Me.ImportDataButton.UseVisualStyleBackColor = True
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(12, 225)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(105, 19)
+        Me.Label3.TabIndex = 9
+        Me.Label3.Text = "Edit dataset:"
+        '
+        'EditCaribouGroupsButton
+        '
+        Me.EditCaribouGroupsButton.Location = New System.Drawing.Point(12, 247)
+        Me.EditCaribouGroupsButton.Name = "EditCaribouGroupsButton"
+        Me.EditCaribouGroupsButton.Size = New System.Drawing.Size(322, 23)
+        Me.EditCaribouGroupsButton.TabIndex = 8
+        Me.EditCaribouGroupsButton.Text = "Edit caribou groups dataset..."
+        Me.EditCaribouGroupsButton.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(349, 343)
+        Me.ClientSize = New System.Drawing.Size(531, 535)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.EditCaribouGroupsButton)
         Me.Controls.Add(Me.ImportDataButton)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.OpenCaribouDetailsFormButton)
@@ -176,4 +199,6 @@ Partial Class Form1
     Friend WithEvents Label2 As Label
     Friend WithEvents OpenCaribouDetailsFormButton As Button
     Friend WithEvents ImportDataButton As Button
+    Friend WithEvents Label3 As Label
+    Friend WithEvents EditCaribouGroupsButton As Button
 End Class

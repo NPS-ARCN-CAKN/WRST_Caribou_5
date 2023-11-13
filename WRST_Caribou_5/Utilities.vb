@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports DevExpress.DataProcessing.InMemoryDataProcessor
 Imports DevExpress.XtraGrid
 Imports DevExpress.XtraGrid.Views.Grid
 Imports DevExpress.XtraPivotGrid
@@ -38,7 +39,7 @@ Module Utilities
             End Using
 
         Catch ex As Exception
-            MsgBox(ex.Message & " (" & System.Reflection.MethodBase.GetCurrentMethod.Name & ")")
+            MsgBox(ex.Message & " (" & System.Reflection.MethodBase.GetCurrentMethod.Name & "). Sql = " & Sql)
         End Try
         Return MyDataTable
     End Function
@@ -152,7 +153,7 @@ Module Utilities
                     End If
                 End If
 
-            ElseIf exporttype = ExportType.CSV Then
+            ElseIf ExportType = ExportType.CSV Then
                 Dim FileFilter As String = "Comma Separated Values text files (*.csv)|*.csv"
 
                 'Open a save file dialog to allow the user to save the file someplace
@@ -256,6 +257,80 @@ Module Utilities
             MsgBox(ex.Message & "  " & System.Reflection.MethodBase.GetCurrentMethod.Name)
         End Try
         Return CurrentValue
+    End Function
+
+    ''' <summary>
+    ''' 'The WRST_Caribou database uses Herd where Animal_Movement database uses ProjectID so we need to translate one to the other
+    ''' </summary>
+    ''' <param name="Herd"></param>
+    ''' <returns></returns>
+    Public Function GetProjectIDFromHerd(Herd As String) As String
+        Dim ProjectID As String = ""
+        Try
+            If Herd = "Chisana" Then ProjectID = "ChisanaCH"
+            If Herd = "Mentasta" Then ProjectID = "WRST_Caribou"
+            If Herd = "Denali" Then ProjectID = "DENA_Caribou"
+        Catch ex As Exception
+            MsgBox(ex.Message & " (" & System.Reflection.MethodBase.GetCurrentMethod.Name & ")")
+        End Try
+        Return ProjectID
+    End Function
+
+    Public Sub ExecuteNonQuery(Sql As String, DatabaseConnectionString As String)
+        Dim MySqlTransaction As SqlTransaction
+        Dim MySqlConnection As New SqlConnection(DatabaseConnectionString)
+        Dim MySqlCommand As New SqlCommand(Sql, MySqlConnection)
+
+        Try
+            MySqlConnection.Open()
+            MySqlTransaction = MySqlConnection.BeginTransaction()
+            Try
+                MySqlCommand.Transaction = MySqlTransaction
+                Dim RowsAffected As Integer = MySqlCommand.ExecuteNonQuery()
+                MySqlTransaction.Commit()
+                MsgBox("Database edits succeeeded. " & RowsAffected & " rows were affected.")
+            Catch ex As Exception
+                MySqlTransaction.Rollback()
+                MsgBox("Error: Database edits failed. The database transaction has been rolled back. " & ex.Message & " (" & System.Reflection.MethodBase.GetCurrentMethod.Name & ")")
+            End Try
+        Catch ex As Exception
+            MsgBox(ex.Message & " (" & System.Reflection.MethodBase.GetCurrentMethod.Name & ")")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Returns a DataTable of Animal_Movement GPS collar deployments for a given Herd, Frequency and SightingDate
+    ''' </summary>
+    ''' <param name="Herd">Caribou herd. String.</param>
+    ''' <param name="Frequency">Frequency. Double.</param>
+    ''' <param name="SightingDate">Sighting date. Date.</param>
+    ''' <returns></returns>
+    Public Function GetDataTableOfCollarDeploymentsForAHerdFrequencyAndSightingDate(Herd As String, Frequency As Double, SightingDate As Date) As DataTable
+        Dim CollarDeploymentsDatatable As New DataTable
+        Try
+            Dim ProjectID As String = GetProjectIDFromHerd(herd)
+
+            'Get the details of the collar deployment for use below from the Animal_Movement database based on the frequency, herd and sighting date
+            Dim Sql As String = "SELECT Animals.ProjectId, Animals.AnimalId, CollarDeployments.DeploymentDate, Collars.Frequency, Animals.Species, Animals.Gender, Collars.DisposalDate, Animals.MortalityDate, CollarDeployments.RetrievalDate, 
+ Animals.GroupName, CollarDeployments.CollarManufacturer, CollarDeployments.CollarId, Collars.CollarModel, Collars.Manager, Collars.Owner, Collars.SerialNumber, Collars.HasGps, Animals.Description AS AnimalDescription, 
+ Collars.Notes AS CollarNotes, CollarDeployments.DeploymentId
+FROM Collars INNER JOIN
+ CollarDeployments ON Collars.CollarManufacturer = CollarDeployments.CollarManufacturer AND Collars.CollarId = CollarDeployments.CollarId INNER JOIN
+ Animals ON CollarDeployments.ProjectId = Animals.ProjectId AND CollarDeployments.AnimalId = Animals.AnimalId
+WHERE  (Collars.Frequency = " & Frequency & ") And (Animals.ProjectId = '" & ProjectID & "')
+And   ( Convert(Date,'" & SightingDate & "') >= isnull(collardeployments.DeploymentDate, Convert(Date,'" & SightingDate & "'))) 
+And   ( Convert(Date,'" & SightingDate & "') <= isnull(collardeployments.RetrievalDate, Convert(Date,'" & SightingDate & "'))) 
+And ( Convert(Date,'" & SightingDate & "') <= isnull(animals.mortalitydate, Convert(Date,'" & SightingDate & "'))) 
+And ( Convert(Date,'" & SightingDate & "') <= isnull(collars.DisposalDate, Convert(Date,'" & SightingDate & "'))) 
+ORDER BY Animals.ProjectId, Animals.AnimalId, CollarDeployments.DeploymentDate"
+
+            'Get a DataTable containing the collar deployment for the frequency above from Animal_Movement
+            CollarDeploymentsDatatable = GetDataTableFromSQLServerDatabase(My.Settings.Animal_MovementConnectionString, Sql)
+
+        Catch ex As Exception
+            MsgBox(ex.Message & " (" & System.Reflection.MethodBase.GetCurrentMethod.Name & ")")
+        End Try
+        Return CollarDeploymentsDatatable
     End Function
 
 End Module
