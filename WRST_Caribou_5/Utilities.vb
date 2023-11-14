@@ -260,10 +260,10 @@ Module Utilities
     End Function
 
     ''' <summary>
-    ''' 'The WRST_Caribou database uses Herd where Animal_Movement database uses ProjectID so we need to translate one to the other
+    ''' 'Returns the equivalent ProjectID from the Animal_Movement database for the submitted WRST_Caribou Herd attribute.
     ''' </summary>
-    ''' <param name="Herd"></param>
-    ''' <returns></returns>
+    ''' <param name="Herd">Caribou herd (Chisana, Mentasta, Denali) in the WRST_Caribou database.</param>
+    ''' <returns>ProjectID (ChisanaCH, WRST_Caribou, DENA_Caribou. See Animal_Movement.Projects table).</returns>
     Public Function GetProjectIDFromHerd(Herd As String) As String
         Dim ProjectID As String = ""
         Try
@@ -276,20 +276,34 @@ Module Utilities
         Return ProjectID
     End Function
 
+    ''' <summary>
+    ''' Runs SQL queries within a database transaction and reports the results.
+    ''' </summary>
+    ''' <param name="Sql">SQL script to run. String.</param>
+    ''' <param name="DatabaseConnectionString">Database ConnectionString. String.</param>
     Public Sub ExecuteNonQuery(Sql As String, DatabaseConnectionString As String)
+
+        'Create database connection and command objects for the database and SQL
         Dim MySqlTransaction As SqlTransaction
         Dim MySqlConnection As New SqlConnection(DatabaseConnectionString)
         Dim MySqlCommand As New SqlCommand(Sql, MySqlConnection)
 
         Try
+            'Open a database connection
             MySqlConnection.Open()
+
+            'Build a transaction
             MySqlTransaction = MySqlConnection.BeginTransaction()
+
             Try
+                'Run the SQL script
                 MySqlCommand.Transaction = MySqlTransaction
                 Dim RowsAffected As Integer = MySqlCommand.ExecuteNonQuery()
                 MySqlTransaction.Commit()
                 MsgBox("Database edits succeeeded. " & RowsAffected & " rows were affected.")
             Catch ex As Exception
+
+                'The transaction failed. Roll back the changes and report.
                 MySqlTransaction.Rollback()
                 MsgBox("Error: Database edits failed. The database transaction has been rolled back. " & ex.Message & " (" & System.Reflection.MethodBase.GetCurrentMethod.Name & ")")
             End Try

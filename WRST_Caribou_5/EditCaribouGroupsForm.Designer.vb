@@ -695,13 +695,13 @@ Partial Class EditCaribouGroupsForm
         '
         Me.CaribouGroupContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ReconcileFrequenciesForThisGroupToolStripMenuItem})
         Me.CaribouGroupContextMenuStrip.Name = "CaribouGroupContextMenuStrip"
-        Me.CaribouGroupContextMenuStrip.Size = New System.Drawing.Size(385, 26)
+        Me.CaribouGroupContextMenuStrip.Size = New System.Drawing.Size(424, 48)
         '
         'ReconcileFrequenciesForThisGroupToolStripMenuItem
         '
         Me.ReconcileFrequenciesForThisGroupToolStripMenuItem.Name = "ReconcileFrequenciesForThisGroupToolStripMenuItem"
-        Me.ReconcileFrequenciesForThisGroupToolStripMenuItem.Size = New System.Drawing.Size(384, 22)
-        Me.ReconcileFrequenciesForThisGroupToolStripMenuItem.Text = "Check the frequency to AnimalID mapping for this group..."
+        Me.ReconcileFrequenciesForThisGroupToolStripMenuItem.Size = New System.Drawing.Size(423, 22)
+        Me.ReconcileFrequenciesForThisGroupToolStripMenuItem.Text = "Analyze/edit frequency to animal mapping for the current group..."
         '
         'CaribouGroupsToolStrip
         '
