@@ -51,11 +51,38 @@
     Private Sub ReconcileFrequenciesForThisGroupToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReconcileFrequenciesForThisGroupToolStripMenuItem.Click
 
         Try
+
+            Dim ReportDataTable As New DataTable("Frequencies")
+            ReportDataTable.Columns.Add("Frequency", GetType(Double))
+            ReportDataTable.Columns.Add("AnimalID", GetType(String))
+            ReportDataTable.Columns.Add("DeploymentExists", GetType(Boolean))
+            ReportDataTable.Columns.Add("Deployments", GetType(Integer))
+            ReportDataTable.Columns.Add("Herd", GetType(String))
+            ReportDataTable.Columns.Add("SightingDate", GetType(Date))
+            ReportDataTable.Columns.Add("SurveyName", GetType(String))
+            ReportDataTable.Columns.Add("InsertQuery", GetType(String))
+            ReportDataTable.Columns.Add("EID", GetType(String))
+
+            'Get the current row's primary key value
+            Dim EID As String = GetCurrentValue(CaribouGroupsBindingSource, "EID") 'Primary key of the CaribouGroups table
+
+            'Need to save pending edits first.
+            If WRST_CaribouDataSet.HasChanges = True Then
+                If MsgBox("You have pending edits that must be saved before you can run this tool. Save?", MsgBoxStyle.YesNo, "Save?") = MsgBoxResult.Yes Then
+
+                    'Save the dataset
+                    SaveCaribouGroupsDataset()
+
+                    'Move back to the place we were at before the save
+                    Me.CaribouGroupsBindingSource.Position = Me.CaribouGroupsBindingSource.Find("EID", EID)
+                End If
+            End If
+
             'Start by getting attributes of the selected group
             Dim SurveyName As String = GetCurrentValue(CaribouGroupsBindingSource, "SurveyName")
             Dim Herd As String = GetCurrentValue(CaribouGroupsBindingSource, "Herd")
             Dim GroupNumber As String = GetCurrentValue(CaribouGroupsBindingSource, "GroupNumber")
-            'Dim EID As String = GetCurrentValue(CaribouGroupsBindingSource, "EID") 'Primary key of the CaribouGroups table
+
             Dim SightingDate As String = GetCurrentValue(CaribouGroupsBindingSource, "SightingDate")
             Dim FrequenciesInGroup As String = GetCurrentValue(CaribouGroupsBindingSource, "FrequenciesInGroup")
             'WRST_Caribou uses Herd, Animal_Movement database uses ProjectID so we need to translate one to the other
@@ -63,6 +90,7 @@
 
             ' Loop through the frequencies in the caribou group and figure out which animal belonged to the frequency for the herd and sightingdate
             If IsDBNull(FrequenciesInGroup) = False Then
+
                 If Len(FrequenciesInGroup.Trim) = 0 Then
                     MsgBox("There are no frequencies associated with this group.")
                 Else
@@ -73,40 +101,75 @@
                     'Loop through the comma separated frequencies and process one by one
                     Dim FrequenciesCount As Integer = 0
                     Dim FrequenciesFound As Integer = 0
+
+
+
+
                     Dim Report As String = "The following is a summary of the frequencies observed in group " & GroupNumber & " of the " & SurveyName & " on " & SightingDate & vbNewLine
                     Report = Report & vbNewLine & "Frequency" & vbTab & "AnimalID" & vbNewLine
                     For Each Frequency As String In Frequencies
+                        Dim NewRow As DataRow = ReportDataTable.NewRow
+                        NewRow.Item("Frequency") = Frequency
+                        NewRow.Item("Herd") = Herd
+                        NewRow.Item("SightingDate") = SightingDate
+                        NewRow.Item("SurveyName") = SurveyName
+                        NewRow.Item("EID") = EID
 
                         Dim CollarDeploymentsDataTable As DataTable = GetDataTableOfCollarDeploymentsForAHerdFrequencyAndSightingDate(Herd, Frequency, SightingDate)
                         If Not CollarDeploymentsDataTable Is Nothing Then
-
+                            NewRow.Item("Deployments") = CollarDeploymentsDataTable.Rows.Count
                             'See if any deployments exist
                             If CollarDeploymentsDataTable.Rows.Count = 0 Then
                                 Report = Report & Frequency & vbTab & "No Animal_Movement deployments found for this frequency." & vbNewLine
+                                NewRow.Item("DeploymentExists") = False
                             ElseIf CollarDeploymentsDataTable.Rows.Count = 1 Then
 
                                 'Collar deployments for the frequency, herd and sightingdate were found in Animal_Movement, process them
                                 Dim AnimalID As String = CollarDeploymentsDataTable.Rows(0).Item("AnimalID")
+                                Dim AMFrequency As Double = CollarDeploymentsDataTable.Rows(0).Item("Frequency")
+                                Dim DeploymentID As Integer = CollarDeploymentsDataTable.Rows(0).Item("DeploymentID")
+
+                                'Add info to the text report
                                 Report = Report & Frequency & vbTab & AnimalID & vbNewLine
 
+                                NewRow.Item("DeploymentExists") = True
+                                NewRow.Item("AnimalID") = AnimalID
+                                Dim InsertQuery As String = "INSERT INTO [dbo].[GroupMembers] ([ActualFrequency],[AnimalID],[EID],[DeploymentID],[GroupMemberID],RecordedFrequency) VALUES(" & AMFrequency & ",'" & AnimalID & "','" & EID & "'," & DeploymentID & ",'" & Guid.NewGuid.ToString & "'," & Frequency & ")"
+                                NewRow.Item("InsertQuery") = InsertQuery
                             ElseIf CollarDeploymentsDataTable.Rows.Count > 1 Then
                                 'This is a big problem because we don't know which animal it was. I know at least one overlapping collar deployment exists in AM
                                 Report = Report & Frequency & vbTab & "Warning: There appear to be multiple collar deployments for the frequency " & Frequency & " in the " & Herd & " herd on " & SightingDate & ". It is not possible to determine which animal was wearing the collar on this date. This problem must be resolved before animals can be associated with this caribou group."
+
+                                NewRow.Item("DeploymentExists") = True
                             End If
                             FrequenciesCount = FrequenciesCount + 1
                             FrequenciesFound = FrequenciesFound + CollarDeploymentsDataTable.Rows.Count
                         Else
                             Report = Report & vbNewLine & "Could not retrieve a data table of collar deployments." & vbNewLine & vbNewLine
                         End If
-
+                        ReportDataTable.Rows.Add(NewRow)
                     Next
+                    'Debug.Print(DataTableToCSV(ReportDataTable))
+                    'Dim F As New Form
+                    'Dim DGV As New DataGridView
+                    'DGV.DataSource = ReportDataTable
+                    'DGV.Dock = DockStyle.Fill
+                    'F.Controls.Add(DGV)
+                    'F.Show()
 
-                    Report = Report & vbNewLine & FrequenciesCount & " frequencies (" & FrequenciesFound & " deployment matches found)."
+                    Dim FrequenciesToAnimalsForm As New FrequenciesToAnimalsMappingReportForm(ReportDataTable)
+                    FrequenciesToAnimalsForm.Show()
+
+                    LoadCaribouGroupsDataset()
+                    Me.CaribouGroupsBindingSource.Position = Me.CaribouGroupsBindingSource.Find("EID", EID)
+
+                    'Report = Report & vbNewLine & FrequenciesCount & " frequencies (" & FrequenciesFound & " deployment matches found)."
 
                     'Offer to repair deficiencies
-                    If MsgBox(Report & vbNewLine & vbNewLine & "If the frequencies to AnimalIDs matching data above shows problems you can try to repair them automatically. Would you like to try?", MsgBoxStyle.YesNo, "Frequencies to AnimalIDs reconciliation report") = MsgBoxResult.Yes Then
-                        InsertGroupMembers()
-                    End If
+                    'If MsgBox(Report & vbNewLine & vbNewLine & "If the frequencies to AnimalIDs matching data above shows problems you can try to repair them automatically. Would you like to try?", MsgBoxStyle.YesNo, "Frequencies to AnimalIDs reconciliation report") = MsgBoxResult.Yes Then
+                    '    InsertGroupMembers()
+                    'End If
+
 
                 End If
             End If
@@ -118,104 +181,106 @@
 
 
 
-    Private Sub InsertGroupMembers()
-        'The purpose of this sub is to look up the collar frequencies in the caribou group in the Animal_Movement 
-        'database in order to determine which AnimalID they belong to.
-        'Then offer to associate the animals with the group by inserting a record in the related GroupMembers data table.
+    'Private Sub InsertGroupMembers()
+    '    'The purpose of this sub is to look up the collar frequencies in the caribou group in the Animal_Movement 
+    '    'database in order to determine which AnimalID they belong to.
+    '    'Then offer to associate the animals with the group by inserting a record in the related GroupMembers data table.
 
-        Try
-            'Start by getting attributes of the selected group
-            Dim SurveyName As String = GetCurrentValue(CaribouGroupsBindingSource, "SurveyName")
-            Dim Herd As String = GetCurrentValue(CaribouGroupsBindingSource, "Herd")
-            Dim GroupNumber As String = GetCurrentValue(CaribouGroupsBindingSource, "GroupNumber")
-            Dim EID As String = GetCurrentValue(CaribouGroupsBindingSource, "EID") 'Primary key of the CaribouGroups table
-            Dim SightingDate As String = GetCurrentValue(CaribouGroupsBindingSource, "SightingDate")
-            Dim FrequenciesInGroup As String = GetCurrentValue(CaribouGroupsBindingSource, "FrequenciesInGroup")
-            'WRST_Caribou uses Herd, Animal_Movement database uses ProjectID so we need to translate one to the other
-            Dim ProjectID As String = GetProjectIDFromHerd(Herd)
+    '    Try
+    '        'Start by getting attributes of the selected group
+    '        Dim SurveyName As String = GetCurrentValue(CaribouGroupsBindingSource, "SurveyName")
+    '        Dim Herd As String = GetCurrentValue(CaribouGroupsBindingSource, "Herd")
+    '        Dim GroupNumber As String = GetCurrentValue(CaribouGroupsBindingSource, "GroupNumber")
+    '        Dim EID As String = GetCurrentValue(CaribouGroupsBindingSource, "EID") 'Primary key of the CaribouGroups table
+    '        Dim SightingDate As String = GetCurrentValue(CaribouGroupsBindingSource, "SightingDate")
+    '        Dim FrequenciesInGroup As String = GetCurrentValue(CaribouGroupsBindingSource, "FrequenciesInGroup")
+    '        'WRST_Caribou uses Herd, Animal_Movement database uses ProjectID so we need to translate one to the other
+    '        Dim ProjectID As String = GetProjectIDFromHerd(Herd)
 
-            ' Loop through the frequencies in the caribou group and figure out which animal belonged to the frequency for the herd and sightingdate
-            If IsDBNull(FrequenciesInGroup) = False Then
-                If Len(FrequenciesInGroup.Trim) = 0 Then
-                    MsgBox("There are no frequencies associated with this group.")
-                Else
+    '        ' Loop through the frequencies in the caribou group and figure out which animal belonged to the frequency for the herd and sightingdate
+    '        If IsDBNull(FrequenciesInGroup) = False Then
+    '            If Len(FrequenciesInGroup.Trim) = 0 Then
+    '                MsgBox("There are no frequencies associated with this group.")
+    '            Else
 
-                    'Make a variable to hold an SQL script to wrap in a transaction later
-                    Dim SQLScript As String = "/* " & vbNewLine & My.User.Name & " " & Now & vbNewLine & "SQL script to associate the frequencies " & FrequenciesInGroup & " with the caribou group " & SurveyName & vbTab & Herd & vbTab & GroupNumber & vbTab & SightingDate & vbTab & "EID: " & EID & vbNewLine & "*/" & vbNewLine
-                    SQLScript = SQLScript & "-- BEGIN TRANSACTION -- COMMIT ROLLBACK" & vbNewLine
-                    'Now see if the GroupMembers data table already has records for the associated frequency/AnimalID
-                    Dim CaribouGroupFilter As String = "EID='" & EID & "'"
 
-                    'Get a DataView of GroupMembers for the current CaribouGroup's EID
-                    Dim GMDV As DataView = New DataView(WRST_CaribouDataSet.Tables("GroupMembers"), CaribouGroupFilter, "", DataViewRowState.CurrentRows)
 
-                    'If group members already exist then ask user what to do
-                    If GMDV.Count > 0 Then
+    '                'Make a variable to hold an SQL script to wrap in a transaction later
+    '                Dim SQLScript As String = "/* " & vbNewLine & My.User.Name & " " & Now & vbNewLine & "SQL script to associate the frequencies " & FrequenciesInGroup & " with the caribou group " & SurveyName & vbTab & Herd & vbTab & GroupNumber & vbTab & SightingDate & vbTab & "EID: " & EID & vbNewLine & "*/" & vbNewLine
+    '                SQLScript = SQLScript & "-- BEGIN TRANSACTION -- COMMIT ROLLBACK" & vbNewLine
+    '                'Now see if the GroupMembers data table already has records for the associated frequency/AnimalID
+    '                Dim CaribouGroupFilter As String = "EID='" & EID & "'"
 
-                        'Group members exist already, ask to delete and regenerate them
-                        Dim DeleteQuery As String = "DELETE FROM GroupMembers WHERE " & CaribouGroupFilter
+    '                'Get a DataView of GroupMembers for the current CaribouGroup's EID
+    '                Dim GMDV As DataView = New DataView(WRST_CaribouDataSet.Tables("GroupMembers"), CaribouGroupFilter, "", DataViewRowState.CurrentRows)
 
-                        'Add the delete query to the list of SQL statements
-                        SQLScript = SQLScript & DeleteQuery & vbNewLine
+    '                'If group members already exist then ask user what to do
+    '                If GMDV.Count > 0 Then
 
-                    End If
+    '                    'Group members exist already, ask to delete and regenerate them
+    '                    Dim DeleteQuery As String = "DELETE FROM GroupMembers WHERE " & CaribouGroupFilter
 
-                    'There are frequencies associated with the group, assume separated by commas and process one by one
-                    Dim Frequencies As String() = FrequenciesInGroup.Split(",")
+    '                    'Add the delete query to the list of SQL statements
+    '                    SQLScript = SQLScript & DeleteQuery & vbNewLine
 
-                    'Loop through the comma separated frequencies and process one by one
-                    Dim FrequenciesCount As Integer = 0
-                    For Each Frequency As String In Frequencies
+    '                End If
 
-                        Dim CollarDeploymentsDataTable As DataTable = GetDataTableOfCollarDeploymentsForAHerdFrequencyAndSightingDate(Herd, Frequency, SightingDate)
-                        If Not CollarDeploymentsDataTable Is Nothing Then
-                            'See if any deployments exist
-                            If CollarDeploymentsDataTable.Rows.Count = 0 Then
-                                If MsgBox("Warning: No deployment found for frequency " & Frequency & " in the " & Herd & " herd on  " & SightingDate & ". Continue? ", MsgBoxStyle.YesNo, "WARNING") = MsgBoxResult.No Then
-                                    MsgBox("Edits canceled.")
-                                    Exit Sub
-                                End If
-                            ElseIf CollarDeploymentsDataTable.Rows.Count = 1 Then
+    '                'There are frequencies associated with the group, assume separated by commas and process one by one
+    '                Dim Frequencies As String() = FrequenciesInGroup.Split(",")
 
-                                'Collar deployments for the frequency, herd and sightingdate were found in Animal_Movement, process them
-                                Dim AnimalID As String = CollarDeploymentsDataTable.Rows(0).Item("AnimalID")
-                                Dim DeploymentID As Integer = CollarDeploymentsDataTable.Rows(0).Item("DeploymentID")
-                                Dim AMFrequency As Double = CollarDeploymentsDataTable.Rows(0).Item("Frequency")
-                                Dim InsertQuery As String = "INSERT INTO [dbo].[GroupMembers] ([ActualFrequency],[AnimalID],[EID],[DeploymentID],[GroupMemberID],RecordedFrequency) VALUES(" & AMFrequency & ",'" & AnimalID & "','" & EID & "'," & DeploymentID & ",'" & Guid.NewGuid.ToString & "'," & Frequency & ")"
+    '                'Loop through the comma separated frequencies and process one by one
+    '                Dim FrequenciesCount As Integer = 0
+    '                For Each Frequency As String In Frequencies
 
-                                'Add the insert query to the list of SQL statements
-                                SQLScript = SQLScript & InsertQuery & vbNewLine
+    '                    Dim CollarDeploymentsDataTable As DataTable = GetDataTableOfCollarDeploymentsForAHerdFrequencyAndSightingDate(Herd, Frequency, SightingDate)
+    '                    If Not CollarDeploymentsDataTable Is Nothing Then
+    '                        'See if any deployments exist
+    '                        If CollarDeploymentsDataTable.Rows.Count = 0 Then
+    '                            If MsgBox("Warning: No deployment found for frequency " & Frequency & " in the " & Herd & " herd on  " & SightingDate & ". Continue? ", MsgBoxStyle.YesNo, "WARNING") = MsgBoxResult.No Then
+    '                                MsgBox("Edits canceled.")
+    '                                Exit Sub
+    '                            End If
+    '                        ElseIf CollarDeploymentsDataTable.Rows.Count = 1 Then
 
-                            ElseIf CollarDeploymentsDataTable.Rows.Count > 1 Then
-                                'This is a big problem because we don't know which animal it was. I know at least one overlapping collar deployment exists in AM
-                                MsgBox("Warning: There appear to be multiple collar deployments for the frequency " & Frequency & " in the " & Herd & " herd on " & SightingDate & ". It is not possible to determine which animal was wearing the collar on this date. This problem must be resolved before animals can be associated with this caribou group.", MsgBoxStyle.Critical, "WARNING")
-                            End If
-                            FrequenciesCount = FrequenciesCount + 1
-                        End If
+    '                            'Collar deployments for the frequency, herd and sightingdate were found in Animal_Movement, process them
+    '                            Dim AnimalID As String = CollarDeploymentsDataTable.Rows(0).Item("AnimalID")
+    '                            Dim DeploymentID As Integer = CollarDeploymentsDataTable.Rows(0).Item("DeploymentID")
+    '                            Dim AMFrequency As Double = CollarDeploymentsDataTable.Rows(0).Item("Frequency")
+    '                            Dim InsertQuery As String = "INSERT INTO [dbo].[GroupMembers] ([ActualFrequency],[AnimalID],[EID],[DeploymentID],[GroupMemberID],RecordedFrequency) VALUES(" & AMFrequency & ",'" & AnimalID & "','" & EID & "'," & DeploymentID & ",'" & Guid.NewGuid.ToString & "'," & Frequency & ")"
 
-                    Next
-                    Dim UpdateFrequenciesCountQuery As String = "UPDATE [CaribouGroups] SET FrequenciesCount = " & FrequenciesCount & " WHERE " & CaribouGroupFilter
-                    SQLScript = SQLScript & UpdateFrequenciesCountQuery & vbNewLine
-                    Debug.Print(SQLScript)
+    '                            'Add the insert query to the list of SQL statements
+    '                            SQLScript = SQLScript & InsertQuery & vbNewLine
 
-                    'Ask to execute the sql script
-                    If MsgBox(SQLScript, MsgBoxStyle.YesNo, "Execute the changes below?") = MsgBoxResult.Yes Then
+    '                        ElseIf CollarDeploymentsDataTable.Rows.Count > 1 Then
+    '                            'This is a big problem because we don't know which animal it was. I know at least one overlapping collar deployment exists in AM
+    '                            MsgBox("Warning: There appear to be multiple collar deployments for the frequency " & Frequency & " in the " & Herd & " herd on " & SightingDate & ". It is not possible to determine which animal was wearing the collar on this date. This problem must be resolved before animals can be associated with this caribou group.", MsgBoxStyle.Critical, "WARNING")
+    '                        End If
+    '                        FrequenciesCount = FrequenciesCount + 1
+    '                    End If
 
-                        ExecuteNonQuery(SQLScript, My.Settings.WRST_CaribouConnectionString)
-                        LoadCaribouGroupsDataset()
-                        Me.CaribouGroupsBindingSource.Position = Me.CaribouGroupsBindingSource.Find("EID", EID)
-                    End If
+    '                Next
+    '                Dim UpdateFrequenciesCountQuery As String = "UPDATE [CaribouGroups] SET FrequenciesCount = " & FrequenciesCount & " WHERE " & CaribouGroupFilter
+    '                SQLScript = SQLScript & UpdateFrequenciesCountQuery & vbNewLine
+    '                Debug.Print(SQLScript)
 
-                End If
-                End If
+    '                'Ask to execute the sql script
+    '                If MsgBox(SQLScript, MsgBoxStyle.YesNo, "Execute the changes below?") = MsgBoxResult.Yes Then
 
-        Catch ex As Exception
-            MsgBox(ex.Message & " (" & System.Reflection.MethodBase.GetCurrentMethod.Name & ")")
-        End Try
-    End Sub
+    '                    ExecuteNonQuery(SQLScript, My.Settings.WRST_CaribouConnectionString)
+    '                    LoadCaribouGroupsDataset()
+    '                    Me.CaribouGroupsBindingSource.Position = Me.CaribouGroupsBindingSource.Find("EID", EID)
+    '                End If
+
+    '            End If
+    '            End If
+
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message & " (" & System.Reflection.MethodBase.GetCurrentMethod.Name & ")")
+    '    End Try
+    'End Sub
 
     Private Sub ConvertFrequenciesToAnimalIDsToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        InsertGroupMembers()
+        'InsertGroupMembers()
     End Sub
 
     Private Sub ApplyFilterToolStripButton_Click_1(sender As Object, e As EventArgs) Handles ApplyFilterToolStripButton.Click

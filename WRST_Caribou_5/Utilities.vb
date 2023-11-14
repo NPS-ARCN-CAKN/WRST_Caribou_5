@@ -333,4 +333,52 @@ ORDER BY Animals.ProjectId, Animals.AnimalId, CollarDeployments.DeploymentDate"
         Return CollarDeploymentsDatatable
     End Function
 
+
+    ''' <summary>
+    ''' Converts a DataTable to a delimiter separated values text block.
+    ''' </summary>
+    ''' <param name="DT">DataTable to convert. DataTable</param>
+    ''' <param name="Delimiter">Values separator. String.</param>
+    ''' <returns>String</returns>
+    ''' <remarks></remarks>
+    Public Function DataTableToCSV(DT As DataTable, Optional Delimiter As String = "|") As String
+        Dim CSV As String = "" 'Return string
+
+        Try
+
+            'Make sure the delimiter is clean
+            Delimiter = Delimiter.Trim
+
+            'If we have a DataTable
+            If Not DT Is Nothing Then
+
+                'Output the column names as a header
+                For Each Column As DataColumn In DT.Columns
+                    CSV = CSV & Column.ColumnName & Delimiter
+                Next
+
+                'Trim the trailing delimiter
+                If CSV.Length > 0 Then
+                    CSV = CSV.Substring(0, CSV.Trim.Length - Delimiter.Length) & vbNewLine
+                End If
+
+                'Output the contents of each DataRow
+                If DT.Rows.Count > 0 Then
+                    For Each Row As DataRow In DT.Rows
+                        For Each Column As DataColumn In DT.Columns
+                            CSV = CSV & Row.Item(Column.ColumnName) & Delimiter
+                        Next
+                        CSV = CSV.Substring(0, CSV.Trim.Length - 1) & vbNewLine
+                    Next
+                End If
+            Else
+                CSV = "Submitted DataTable is nothing."
+            End If
+        Catch ex As Exception
+            CSV = ex.Message
+            MsgBox(ex.Message & " (" & System.Reflection.MethodBase.GetCurrentMethod.Name & ")")
+        End Try
+        Return CSV
+    End Function
+
 End Module
