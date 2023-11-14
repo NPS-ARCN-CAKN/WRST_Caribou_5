@@ -6,8 +6,9 @@
     End Sub
 
     Private Sub OpenAnimalObservationsFormButton_Click(sender As Object, e As EventArgs) Handles OpenAnimalObservationsFormButton.Click
-        Dim AnimalObservationsForm As New AnimalObservationsDatasetForm
-        AnimalObservationsForm.Show()
+        Dim AnimalObservationsDatasetForm As New AnimalObservationsDatasetForm
+        AnimalObservationsDatasetForm.Show()
+
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -34,5 +35,10 @@
         'ExecuteNonQuery(Sql, My.Settings.WRST_CaribouConnectionString)
         Dim EditCaribouGroupsForm As New EditCaribouGroupsForm
         EditCaribouGroupsForm.Show()
+    End Sub
+
+    Private Sub ImportDataButton_Click(sender As Object, e As EventArgs) Handles ImportDataButton.Click
+        Dim ImportDataForm As New ImportDataForm
+        ImportDataForm.ShowDialog()
     End Sub
 End Class
